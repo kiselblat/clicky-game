@@ -9,10 +9,3 @@
   align-content: flex-start;
   overflow: auto;
 }
-
-/* .wrapper {
-  display: flex;
-  flex-flow: row wrap;
-  overflow: auto;
-  justify-content: space-around;
-} */
