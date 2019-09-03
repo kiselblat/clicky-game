@@ -12,25 +12,6 @@ class App extends Component {
     highscore: 0
   };
 
-  // handles game over business
-  gameOver = () => {
-    // record new high score if applicable
-    if (this.state.score > this.state.highscore) {
-      this.setState({highscore: this.state.score}, () => {
-        console.log(this.state.highscore);
-      });
-    }
-    // reset each click count to zero
-    this.state.cards.forEach(element => {
-      element.count = 0;
-    });
-    // tell the user
-    // TODO: find less obnoxious way to inform user
-    alert(`Game Over! You made it ${this.state.score} clicks!`);
-    this.setState( {score: 0} );
-    return true;
-  }
-
   // handles clicks poorly
   clickHandler = id => {
     this.state.cards.find((clicked, index) => {
@@ -53,7 +34,26 @@ class App extends Component {
     });
   }
 
-  // render is a built in react deal
+  // handles game over business
+  gameOver = () => {
+    // record new high score if applicable
+    if (this.state.score > this.state.highscore) {
+      this.setState({highscore: this.state.score}, () => {
+        console.log(this.state.highscore);
+      });
+    }
+    // reset each click count to zero
+    this.state.cards.forEach(element => {
+      element.count = 0;
+    });
+    // tell the user
+    // TODO: find less obnoxious way to inform user
+    alert(`Game Over! You made it ${this.state.score} clicks!`);
+    this.setState( {score: 0} );
+    return true;
+  }
+  
+  // render is a built in react deal, gets called whenever setState is called
   render() {
     return (
       <Wrapper>
