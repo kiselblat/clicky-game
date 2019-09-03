@@ -1,26 +1,73 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Card from "./components/Card";
+import Wrapper from "./components/Wrapper";
+import Scoreboard from "./components/Scoreboard";
+import faces from "./friends.json";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  // Setting this.state.cards to the faces array
+  state = {
+    cards: faces,
+    score: 0,
+    highscore: 0
+  };
+
+  // handles game over business
+  gameOver = () => {
+    // record new high score if applicable
+    if (this.state.score > this.state.highscore) {
+      this.setState({highscore: this.state.score}, () => {
+        console.log(this.state.highscore);
+      });
+    }
+    // reset each click count to zero
+    this.state.cards.forEach(element => {
+      element.count = 0;
+    });
+    // tell the user
+    // TODO: find less obnoxious way to inform user
+    alert(`Game Over! You made it ${this.state.score} clicks!`);
+    this.setState( {score: 0} );
+    return true;
+  }
+
+  // handles clicks poorly
+  clickHandler = id => {
+    this.state.cards.find((clicked, index) => {
+      if (clicked.id === id) {
+        if (faces[index].count === 0) {
+          faces[index].count++;
+          this.setState( {score: this.state.score + 1}, () => {
+            console.log(this.state.score);
+          });
+          this.state.cards.sort(() => Math.random() - 0.5);
+          return true;
+        } else {
+          this.gameOver();
+          return false;
+        }
+      } else {
+        console.log("Error!")
+        return null;
+      }
+    });
+  }
+
+  // render is a built in react deal
+  render() {
+    return (
+      <Wrapper>
+        <Scoreboard score={this.state.score} highscore={this.state.highscore}>Clicky Game</Scoreboard>
+        {this.state.cards.map(card => (
+          <Card
+            clickHandler={this.clickHandler}
+            id={card.id}
+            image={card.image}
+          />
+        ))}
+      </Wrapper>
+    );
+  }
 }
 
 export default App;
