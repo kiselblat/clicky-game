@@ -1,0 +1,28 @@
+.scoreboard {
+  width: 100%;
+  font-size: 2rem;
+  color: #2A77AE;
+  margin-bottom: 10px;
+}
+
+.headline {
+  float: left;
+}
+
+.scores {
+  float: right;
+}
+
+/* .scoreboard {
+  margin: 1em;
+}
+
+.headline {
+  float: left;
+  margin: 1em;
+}
+
+.scores {
+  float: right;
+  margin: 1em;
+} */
